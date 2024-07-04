@@ -1,0 +1,49 @@
+.categories {
+    width: 100%;
+    height: 100%;
+}
+
+.categories >div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 20px 10%;
+    margin: 10px;
+}
+
+
+.cate_conte > p {
+    margin: 10px 50px;
+    border-bottom: 2px solid tomato;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.cate_conte > select {
+    padding: 10px;
+    outline: none;
+    background-color: #4CAF50;
+    color: #ffff;
+    font-weight: 500;
+}
+.cate_conte select option {
+    background-color: #ffff;
+    color: black;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 14px;
+    letter-spacing: 1ch;
+}
+.cate_conte > input {
+    width: 90px;
+    padding: 5px;
+    font-size: 18px;
+    text-align: center;
+}
+.cate_conte > input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
