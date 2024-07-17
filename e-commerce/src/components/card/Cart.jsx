@@ -9,6 +9,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cartItems.items);
 
+
   console.log(cartItems);
 
   const handleQuantityAdd = (id, quant) => {
@@ -22,8 +23,6 @@ const Cart = () => {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-
-
 
   return (
     <div className="cart_container">

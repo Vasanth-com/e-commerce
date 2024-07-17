@@ -68,7 +68,7 @@ const Home = () => {
 
                 <p className="desc">{item.description}</p>
 
-                <p className="price">{item.price} $</p>
+                <p className="price">$ {item.price}</p>
 
                 <Link className="action" to={`/product-details/${item.id}`}>
                 Find out more

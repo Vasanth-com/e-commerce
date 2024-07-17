@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {addCartItem} from '../../redux/actions/cartActions'
@@ -10,6 +10,7 @@ const ProductDetails = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const product = products.find((p)=>p.id === parseInt(id))
+    const [afterDiscountPrice,setAfterDiscountPrice] = useState(0)
 
     console.log(product);
 
@@ -20,40 +21,51 @@ const ProductDetails = () => {
     }
 
 
+    const discountPrice = () =>{
+        let discountPrice = product.price * (product.discountPercentage/100);
+        const priceDiscount = product.price - discountPrice;
+        setAfterDiscountPrice(Math.floor(priceDiscount))
+    }
+
+    useEffect(()=>{
+        discountPrice()
+    },[product])
   return (
-    <div className='product_details'>
+    <main className='main-container'>
+        <div style={{position: "fixed",
+    zIndex: "9999",
+    inset: "16px",
+    pointerEvents: "none"}}></div>
         {loading ? "loading":""}
-        {error ? error :""}
-       { product &&
-        ( 
-        <div key={product.id} className="product_details__content">
-            <div className='product-img'>
-            <img src={product.images[0]} alt="" />
+        {error ? "error":""}
+        {
+            product && (
+                <div key={product.id} className='product-detail-container'>
+            <div>
+                <div className="image-container">
+                    <img src={product.images[0]} alt="" className='product-detail-image' />
+                </div>
             </div>
-            <div className='product__content-right'>
-                <div className='row-1'>
-                <b>{product.title}</b>
-                <p>{product.description}</p>
-                </div>
-               <div className='row-2'>
-               <p>Price: ${product.price} </p>
-                <p>Discount: {product.discountPercentage} %</p>
-                <p>Stock: {product.stock}</p>
-                <p>Quantity: {product.minimumOrderQuantity}</p>
-                </div>
-                <div className='rating__col'>
-                    <p>Rating:</p>
-                {Array(Math.floor(product.rating)).fill().map((_,i)=>
-                <p>🌟</p>
+            <div className="product-detail-desc">
+                    <h1>{product.title}</h1>
+                <div className="reviews">
+                    {Array(Math.floor(product.rating)).fill().map((_,i)=>
+                        <span>🌟</span>
                     )}
                     <p>({product.reviews.length} Reviews)</p>
                 </div>
-            <button className='btn' onClick={handleAddToCart}>Add to Cart</button>
-            <Link style={{textDecoration:"none",textAlign:"center"}} to= '/' className='btn'>Go back</Link>
+                <h4>Detail</h4>
+                <p>{product.description}</p>
+                <div className='price_container'>
+                <p className='price'>${afterDiscountPrice}</p>
+                <p className='price-original'>${product.price}</p>
+                </div>
+                <button className='btn ' onClick={handleAddToCart}>Add to cart</button>
             </div>
-        </div>)}
-     
-    </div>
+        </div>
+            )
+        }
+    </main>
   )
 }
 
